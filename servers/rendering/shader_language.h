@@ -800,6 +800,8 @@ public:
 	static bool is_control_flow_keyword(String p_keyword);
 	static void get_builtin_funcs(List<String> *r_keywords);
 
+	static int instance_counter;
+
 	struct BuiltInInfo {
 		DataType type = TYPE_VOID;
 		bool constant = false;
@@ -915,8 +917,21 @@ private:
 
 	// Additional function information (eg. call hierarchy). No need to expose it to compiler.
 	struct CallInfo {
+		struct Item {
+			enum ItemType {
+				ITEM_TYPE_BUILTIN,
+				ITEM_TYPE_VARYING,
+			} type;
+
+			TkPos pos;
+
+			Item() {}
+			Item(ItemType p_type, TkPos p_pos) :
+					type(p_type), pos(p_pos) {}
+		};
+
 		StringName name;
-		List<Pair<StringName, TkPos>> uses_restricted_functions;
+		List<Pair<StringName, Item>> uses_restricted_items;
 		List<CallInfo *> calls;
 	};
 

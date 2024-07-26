@@ -1420,7 +1420,7 @@ void RasterizerSceneGLES3::_fill_render_list(RenderListType p_render_list, const
 #else
 				bool force_alpha = false;
 #endif
-				if (!force_alpha && (surf->flags & GeometryInstanceSurface::FLAG_PASS_OPAQUE)) {
+				if (!force_alpha && (surf->flags & (GeometryInstanceSurface::FLAG_PASS_DEPTH | GeometryInstanceSurface::FLAG_PASS_OPAQUE))) {
 					rl->add_element(surf);
 				}
 				if (force_alpha || (surf->flags & GeometryInstanceSurface::FLAG_PASS_ALPHA)) {
@@ -2499,7 +2499,9 @@ void RasterizerSceneGLES3::render_scene(const Ref<RenderSceneBuffers> &p_render_
 		glColorMask(0, 0, 0, 0);
 		RasterizerGLES3::clear_depth(0.0);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		glDrawBuffers(0, nullptr);
+		// Some desktop GL implementations fall apart when using Multiview with GL_NONE.
+		GLuint db = p_camera_data->view_count > 1 ? GL_COLOR_ATTACHMENT0 : GL_NONE;
+		glDrawBuffers(1, &db);
 
 		uint64_t spec_constant = SceneShaderGLES3::DISABLE_FOG | SceneShaderGLES3::DISABLE_LIGHT_DIRECTIONAL |
 				SceneShaderGLES3::DISABLE_LIGHTMAP | SceneShaderGLES3::DISABLE_LIGHT_OMNI |

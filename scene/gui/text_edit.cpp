@@ -1643,21 +1643,14 @@ void TextEdit::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_DRAG_END: {
-			if (is_drag_successful()) {
-				if (selection_drag_attempt) {
-					// Dropped elsewhere.
-					if (is_editable() && !Input::get_singleton()->is_key_pressed(Key::CMD_OR_CTRL)) {
-						delete_selection();
-					} else if (deselect_on_focus_loss_enabled) {
-						deselect();
-					}
+			remove_drag_caret();
+			if (selection_drag_attempt && is_drag_successful()) {
+				// Dropped elsewhere.
+				if (is_editable() && !Input::get_singleton()->is_key_pressed(Key::CMD_OR_CTRL)) {
+					delete_selection();
+				} else if (deselect_on_focus_loss_enabled) {
+					deselect();
 				}
-			}
-			if (drag_caret_index >= 0) {
-				if (drag_caret_index < carets.size()) {
-					remove_caret(drag_caret_index);
-				}
-				drag_caret_index = -1;
 			}
 			selection_drag_attempt = false;
 			drag_action = false;
@@ -4606,6 +4599,15 @@ void TextEdit::remove_caret(int p_caret) {
 	}
 }
 
+void TextEdit::remove_drag_caret() {
+	if (drag_caret_index >= 0) {
+		if (drag_caret_index < carets.size()) {
+			remove_caret(drag_caret_index);
+		}
+		drag_caret_index = -1;
+	}
+}
+
 void TextEdit::remove_secondary_carets() {
 	if (carets.size() == 1) {
 		return;
@@ -5910,6 +5912,11 @@ void TextEdit::adjust_viewport_to_caret(int p_caret) {
 		visible_width -= v_scroll->get_combined_minimum_size().width;
 	}
 	visible_width -= 20; // Give it a little more space.
+
+	if (visible_width <= 0) {
+		// Not resized yet.
+		return;
+	}
 
 	Vector2i caret_pos;
 
@@ -8141,7 +8148,7 @@ void TextEdit::_update_gutter_width() {
 
 /* Syntax highlighting. */
 Dictionary TextEdit::_get_line_syntax_highlighting(int p_line) {
-	return syntax_highlighter.is_null() && !setting_text ? Dictionary() : syntax_highlighter->get_line_syntax_highlighting(p_line);
+	return (syntax_highlighter.is_null() || setting_text) ? Dictionary() : syntax_highlighter->get_line_syntax_highlighting(p_line);
 }
 
 /* Deprecated. */

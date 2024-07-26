@@ -1967,8 +1967,8 @@ void GDScriptAnalyzer::resolve_assignable(GDScriptParser::AssignableNode *p_assi
 	}
 
 #ifdef DEBUG_ENABLED
+	const bool is_parameter = p_assignable->type == GDScriptParser::Node::PARAMETER;
 	if (!has_specified_type) {
-		const bool is_parameter = p_assignable->type == GDScriptParser::Node::PARAMETER;
 		const String declaration_type = is_constant ? "Constant" : (is_parameter ? "Parameter" : "Variable");
 		if (p_assignable->infer_datatype || is_constant) {
 			// Do not produce the `INFERRED_DECLARATION` warning on type import because there is no way to specify the true type.
@@ -1980,7 +1980,7 @@ void GDScriptAnalyzer::resolve_assignable(GDScriptParser::AssignableNode *p_assi
 		} else {
 			parser->push_warning(p_assignable, GDScriptWarning::UNTYPED_DECLARATION, declaration_type, p_assignable->identifier->name);
 		}
-	} else if (specified_type.kind == GDScriptParser::DataType::ENUM && p_assignable->initializer == nullptr) {
+	} else if (!is_parameter && specified_type.kind == GDScriptParser::DataType::ENUM && p_assignable->initializer == nullptr) {
 		// Warn about enum variables without default value. Unless the enum defines the "0" value, then it's fine.
 		bool has_zero_value = false;
 		for (const KeyValue<StringName, int64_t> &kv : specified_type.enum_values) {
@@ -5180,7 +5180,7 @@ bool GDScriptAnalyzer::get_function_signature(GDScriptParser::Node *p_source, bo
 		if (!class_exists(base_native)) {
 			push_error(vformat("Native class %s used in script doesn't exist or isn't exposed.", base_native), p_source);
 			return false;
-		} else if (p_is_constructor && !ClassDB::can_instantiate(base_native)) {
+		} else if (p_is_constructor && ClassDB::is_abstract(base_native)) {
 			if (p_base_type.kind == GDScriptParser::DataType::CLASS) {
 				push_error(vformat(R"(Class "%s" cannot be constructed as it is based on abstract native class "%s".)", p_base_type.class_type->fqcn.get_file(), base_native), p_source);
 			} else if (p_base_type.kind == GDScriptParser::DataType::SCRIPT) {

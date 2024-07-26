@@ -248,7 +248,7 @@ void AnimationPlayerEditor::_play_from_pressed() {
 			player->clear_caches(); //so it won't blend with itself
 		}
 		ERR_FAIL_COND_EDMSG(!_validate_tracks(player->get_animation(current)), "Animation tracks may have any invalid key, abort playing.");
-		player->seek(time, true, true);
+		player->seek_internal(time, true, true, true);
 		player->play(current);
 	}
 
@@ -286,7 +286,7 @@ void AnimationPlayerEditor::_play_bw_from_pressed() {
 			player->clear_caches(); //so it won't blend with itself
 		}
 		ERR_FAIL_COND_EDMSG(!_validate_tracks(player->get_animation(current)), "Animation tracks may have any invalid key, abort playing.");
-		player->seek(time, true, true);
+		player->seek_internal(time, true, true, true);
 		player->play_backwards(current);
 	}
 
@@ -345,6 +345,7 @@ void AnimationPlayerEditor::_animation_selected(int p_which) {
 		}
 		frame->set_max((double)anim->get_length());
 		autoplay->set_pressed(current == player->get_autoplay());
+		player->stop();
 	} else {
 		track_editor->set_animation(Ref<Animation>(), true);
 		track_editor->set_root(nullptr);
@@ -1295,7 +1296,7 @@ void AnimationPlayerEditor::_seek_value_changed(float p_value, bool p_timeline_o
 	pos = CLAMP(pos, 0, (double)anim->get_length() - CMP_EPSILON2); // Hack: Avoid fposmod with LOOP_LINEAR.
 
 	if (!p_timeline_only && anim.is_valid()) {
-		player->seek(pos, true, true);
+		player->seek_internal(pos, true, true, false);
 	}
 
 	track_editor->set_anim_pos(pos);
@@ -1395,23 +1396,14 @@ void AnimationPlayerEditor::_current_animation_changed(const String &p_name) {
 void AnimationPlayerEditor::_animation_key_editor_anim_len_changed(float p_len) {
 	frame->set_max(p_len);
 }
-
-void AnimationPlayerEditor::_animation_key_editor_seek(float p_pos, bool p_timeline_only) {
+void AnimationPlayerEditor::_animation_key_editor_seek(float p_pos, bool p_timeline_only, bool p_update_position_only) {
 	timeline_position = p_pos;
 
-	if (!is_visible_in_tree()) {
-		return;
-	}
-
-	if (!player) {
-		return;
-	}
-
-	if (player->is_playing()) {
-		return;
-	}
-
-	if (!player->has_animation(player->get_assigned_animation())) {
+	if (!is_visible_in_tree() ||
+			p_update_position_only ||
+			!player ||
+			player->is_playing() ||
+			!player->has_animation(player->get_assigned_animation())) {
 		return;
 	}
 
@@ -1715,7 +1707,7 @@ void AnimationPlayerEditor::_prepare_onion_layers_2_step_prepare(int p_step_offs
 		bool valid = anim->get_loop_mode() != Animation::LOOP_NONE || (pos >= 0 && pos <= anim->get_length());
 		onion.captures_valid[p_capture_idx] = valid;
 		if (valid) {
-			player->seek(pos, true, true);
+			player->seek_internal(pos, true, true, false);
 			OS::get_singleton()->get_main_loop()->process(0);
 			// This is the key: process the frame and let all callbacks/updates/notifications happen
 			// so everything (transforms, skeletons, etc.) is up-to-date visually.
@@ -1772,7 +1764,7 @@ void AnimationPlayerEditor::_prepare_onion_layers_2_epilog() {
 	//        backed by a proper reset animation will work correctly with onion
 	//        skinning and the possibility to restore the values mentioned in the
 	//        first point above is gone. Still good enough.
-	player->seek(onion.temp.anim_player_position, true, true);
+	player->seek_internal(onion.temp.anim_player_position, true, true, false);
 	player->restore(onion.temp.anim_values_backup);
 
 	// Restore state of main editors.

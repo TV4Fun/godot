@@ -39,6 +39,8 @@
 
 #define HAS_WARNING(flag) (warning_flags & flag)
 
+int ShaderLanguage::instance_counter = 0;
+
 String ShaderLanguage::get_operator_text(Operator p_op) {
 	static const char *op_names[OP_MAX] = { "==",
 		"!=",
@@ -4662,9 +4664,18 @@ bool ShaderLanguage::_validate_restricted_func(const StringName &p_name, const C
 		}
 	}
 
-	if (!p_func_info->uses_restricted_functions.is_empty()) {
-		const Pair<StringName, TkPos> &first_element = p_func_info->uses_restricted_functions.get(0);
-		_set_tkpos(first_element.second);
+	if (!p_func_info->uses_restricted_items.is_empty()) {
+		const Pair<StringName, CallInfo::Item> &first_element = p_func_info->uses_restricted_items.get(0);
+
+		if (first_element.second.type == CallInfo::Item::ITEM_TYPE_VARYING) {
+			const ShaderNode::Varying &varying = shader->varyings[first_element.first];
+
+			if (varying.stage == ShaderNode::Varying::STAGE_VERTEX) {
+				return true;
+			}
+		}
+
+		_set_tkpos(first_element.second.pos);
 
 		if (is_in_restricted_function) {
 			_set_error(vformat(RTR("'%s' cannot be used within the '%s' processor function."), first_element.first, "vertex"));
@@ -5350,7 +5361,7 @@ ShaderLanguage::Node *ShaderLanguage::_parse_expression(BlockNode *p_block, cons
 									return nullptr;
 								}
 								// Register usage of the restricted function.
-								calls_info[current_function].uses_restricted_functions.push_back(Pair<StringName, TkPos>(name, _get_tkpos()));
+								calls_info[current_function].uses_restricted_items.push_back(Pair<StringName, CallInfo::Item>(name, CallInfo::Item(CallInfo::Item::ITEM_TYPE_BUILTIN, _get_tkpos())));
 								is_builtin = true;
 								break;
 							}
@@ -5467,10 +5478,11 @@ ShaderLanguage::Node *ShaderLanguage::_parse_expression(BlockNode *p_block, cons
 
 										if (shader->varyings.has(varname)) {
 											switch (shader->varyings[varname].stage) {
-												case ShaderNode::Varying::STAGE_UNKNOWN: {
-													_set_error(vformat(RTR("Varying '%s' must be assigned in the 'vertex' or 'fragment' function first."), varname));
-													return nullptr;
-												}
+												case ShaderNode::Varying::STAGE_UNKNOWN:
+													if (is_out_arg) {
+														error = true;
+													}
+													break;
 												case ShaderNode::Varying::STAGE_VERTEX_TO_FRAGMENT_LIGHT:
 													[[fallthrough]];
 												case ShaderNode::Varying::STAGE_VERTEX:
@@ -5546,10 +5558,16 @@ ShaderLanguage::Node *ShaderLanguage::_parse_expression(BlockNode *p_block, cons
 										}
 									}
 									if (is_sampler_type(call_function->arguments[i].type)) {
-										//let's see where our argument comes from
-										ERR_CONTINUE(n->type != Node::NODE_TYPE_VARIABLE); //bug? this should always be a variable
-										VariableNode *vn = static_cast<VariableNode *>(n);
-										StringName varname = vn->name;
+										// Let's see where our argument comes from.
+										StringName varname;
+										if (n->type == Node::NODE_TYPE_VARIABLE) {
+											VariableNode *vn = static_cast<VariableNode *>(n);
+											varname = vn->name;
+										} else if (n->type == Node::NODE_TYPE_ARRAY) {
+											ArrayNode *an = static_cast<ArrayNode *>(n);
+											varname = an->name;
+										}
+
 										if (shader->uniforms.has(varname)) {
 											//being sampler, this either comes from a uniform
 											ShaderNode::Uniform *u = &shader->uniforms[varname];
@@ -5664,6 +5682,8 @@ ShaderLanguage::Node *ShaderLanguage::_parse_expression(BlockNode *p_block, cons
 						_set_tkpos(prev_pos);
 
 						ShaderNode::Varying &var = shader->varyings[identifier];
+						calls_info[current_function].uses_restricted_items.push_back(Pair<StringName, CallInfo::Item>(identifier, CallInfo::Item(CallInfo::Item::ITEM_TYPE_VARYING, prev_pos)));
+
 						String error;
 						if (is_token_operator_assign(next_token.type)) {
 							if (!_validate_varying_assign(shader->varyings[identifier], &error)) {
@@ -10812,17 +10832,16 @@ ShaderLanguage::ShaderLanguage() {
 	nodes = nullptr;
 	completion_class = TAG_GLOBAL;
 
-	int idx = 0;
-	while (builtin_func_defs[idx].name) {
-		if (builtin_func_defs[idx].tag == SubClassTag::TAG_GLOBAL) {
-			const StringName &name = StringName(builtin_func_defs[idx].name);
-
-			if (!global_func_set.has(name)) {
-				global_func_set.insert(name);
+	if (instance_counter == 0) {
+		int idx = 0;
+		while (builtin_func_defs[idx].name) {
+			if (builtin_func_defs[idx].tag == SubClassTag::TAG_GLOBAL) {
+				global_func_set.insert(builtin_func_defs[idx].name);
 			}
+			idx++;
 		}
-		idx++;
 	}
+	instance_counter++;
 
 #ifdef DEBUG_ENABLED
 	warnings_check_map.insert(ShaderWarning::UNUSED_CONSTANT, &used_constants);
@@ -10837,5 +10856,8 @@ ShaderLanguage::ShaderLanguage() {
 
 ShaderLanguage::~ShaderLanguage() {
 	clear();
-	global_func_set.clear();
+	instance_counter--;
+	if (instance_counter == 0) {
+		global_func_set.clear();
+	}
 }
