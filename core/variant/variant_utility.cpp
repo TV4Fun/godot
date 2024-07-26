@@ -1014,13 +1014,6 @@ void VariantUtilityFunctions::push_error(const Variant **p_args, int p_arg_count
 		r_error.expected = 1;
 	}
 
-		if (i == 0) {
-			s = os;
-		} else {
-			s += os;
-		}
-	}
-
 	_err_print_error_backtrace(FUNCTION_STR, join(p_args, p_arg_count));
 	r_error.error = Callable::CallError::CALL_OK;
 }
