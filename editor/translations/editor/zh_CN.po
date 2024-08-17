@@ -105,7 +105,7 @@ msgstr ""
 "Project-Id-Version: Chinese (Simplified) (Godot Engine)\n"
 "Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
 "POT-Creation-Date: 2018-01-20 12:15+0200\n"
-"PO-Revision-Date: 2024-06-28 02:45+0000\n"
+"PO-Revision-Date: 2024-08-13 23:09+0000\n"
 "Last-Translator: Haoyu Qiu <timothyqiu32@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "godot-engine/godot/zh_Hans/>\n"
@@ -956,6 +956,9 @@ msgstr "轨道路径无效，因此无法添加关键帧。"
 
 msgid "Track is not of type Node3D, can't insert key"
 msgstr "轨道不是 Node3D 类型，无法插入关键帧"
+
+msgid "Track is not of type MeshInstance3D, can't insert key"
+msgstr "轨道不是 MeshInstance3D 类型，无法插入关键帧"
 
 msgid "Track path is invalid, so can't add a method key."
 msgstr "轨道路径无效，所以无法添加方法帧。"
@@ -3488,6 +3491,11 @@ msgid "%s no longer exists! Please specify a new save location."
 msgstr "%s 不再存在！请指定新的保存位置。"
 
 msgid ""
+"The current scene has no root node, but %d modified external resource(s) and/"
+"or plugin data were saved anyway."
+msgstr "当前场景没有根节点，不过保存了 %d 个已修改的外部资源、插件数据。"
+
+msgid ""
 "A root node is required to save the scene. You can add a root node using the "
 "Scene tree dock."
 msgstr "必须有根节点才能保存场景。你可以通过场景面板添加根节点。"
@@ -3722,6 +3730,24 @@ msgstr "其他 %d 个文件"
 msgid ""
 "Unable to write to file '%s', file in use, locked or lacking permissions."
 msgstr "无法写入文件“%s”，文件被占用、已锁定、或权限不足。"
+
+msgid "Preparing scenes for reload"
+msgstr "正在准备场景重新加载"
+
+msgid "Analyzing scene %s"
+msgstr "正在分析场景 %s"
+
+msgid "Preparation done."
+msgstr "准备完成。"
+
+msgid "Scenes reloading"
+msgstr "正在重新加载场景"
+
+msgid "Reloading..."
+msgstr "正在重新加载..."
+
+msgid "Reloading done."
+msgstr "重新加载完成。"
 
 msgid ""
 "Changing the renderer requires restarting the editor.\n"
@@ -4284,6 +4310,9 @@ msgstr "项目运行"
 
 msgid "Write your logic in the _run() method."
 msgstr "在 _run() 方法中填写逻辑代码。"
+
+msgid "The current scene already has a root node."
+msgstr "当前场景已存在根节点。"
 
 msgid "Edit Built-in Action: %s"
 msgstr "编辑内置动作：%s"
@@ -6288,6 +6317,15 @@ msgstr "展开非默认项"
 msgid "Property Name Style"
 msgstr "属性名称样式"
 
+msgid "Raw (e.g. \"%s\")"
+msgstr "原始（例如“%s”）"
+
+msgid "Capitalized (e.g. \"%s\")"
+msgstr "首字母大写（例如“%s”）"
+
+msgid "Localized (e.g. \"Z Index\")"
+msgstr "本地化（例如“Z 索引”）"
+
 msgid "Localization not available for current language."
 msgstr "无法为当前语言提供本地化。"
 
@@ -7711,6 +7749,11 @@ msgstr "放下时按住 Alt + Shift 添加为不同的节点类型。"
 msgid "Change Default Type"
 msgstr "修改默认类型"
 
+msgid ""
+"All selected CanvasItems are either invisible or locked in some way and can't "
+"be transformed."
+msgstr "所选 CanvasItem 均处于不可见或锁定状态，无法进行变换。"
+
 msgid "Set Target Position"
 msgstr "设置目标位置"
 
@@ -8393,6 +8436,11 @@ msgid ""
 msgstr ""
 "创建光照贴图图像失败。请确保所选需要烘焙的网格的 `lightmap_size_hint` 足够大，"
 "不要将 LightmapGI 的 `texel_scale` 设得太低。"
+
+msgid ""
+"Failed fitting a lightmap image into an atlas. This should never happen and "
+"should be reported."
+msgstr "图集中无法容纳光照贴图。该情况不应发生，请汇报这个问题。"
 
 msgid "Bake Lightmaps"
 msgstr "烘焙光照贴图"
@@ -10296,11 +10344,11 @@ msgstr ""
 "编辑模式\n"
 "在关节处显示按钮。"
 
-msgid "Insert key of bone poses already exist track."
-msgstr "插入已存在轨道的骨骼姿势关键帧。"
+msgid "Insert key (based on mask) for bones with an existing track."
+msgstr "为已存在轨道的骨骼插入关键帧（基于遮罩）。"
 
-msgid "Insert key of all bone poses."
-msgstr "插入所有骨骼姿势关键帧。"
+msgid "Insert key (based on mask) for all bones."
+msgstr "为所有骨骼插入关键帧（基于遮罩）。"
 
 msgid "Insert Key (All Bones)"
 msgstr "插入关键帧（所有骨骼）"
@@ -12521,6 +12569,11 @@ msgid ""
 msgstr "如果提供的布尔值是 true 或 false，则返回关联的 3D 向量。"
 
 msgid ""
+"Returns an associated 4D vector if the provided boolean value is true or "
+"false."
+msgstr "如果提供的布尔值是 true 或 false，则返回关联的 4D 向量。"
+
+msgid ""
 "Returns an associated boolean if the provided boolean value is true or false."
 msgstr "如果提供的布尔值是 true 或 false，则返回关联的布尔值。"
 
@@ -13038,6 +13091,13 @@ msgstr "返回一个介于最小和最大输入值之间的随机值。"
 
 msgid "Remaps a given input from the input range to the output range."
 msgstr "将一个给定的输入从输入范围重新映射到输出范围。"
+
+msgid ""
+"Builds a rotation matrix from the given axis and angle, multiply the input "
+"vector by it and returns both this vector and a matrix."
+msgstr ""
+"根据给定的旋转轴和旋转角来构建旋转矩阵，该矩阵会与输入向量相乘，返回的是该向量"
+"和矩阵。"
 
 msgid "Vector function."
 msgstr "向量函数。"
@@ -13688,6 +13748,9 @@ msgid ""
 "recommended."
 msgstr "所选路径不为空。强烈建议选择一个空文件夹。"
 
+msgid "New Game Project"
+msgstr "新建游戏项目"
+
 msgid "Supports desktop platforms only."
 msgstr "仅支持桌面平台。"
 
@@ -13763,9 +13826,6 @@ msgid ""
 "Couldn't load project at '%s' (error %d). It may be missing or corrupted."
 msgstr "无法加载位于“%s”的项目（错误 %d）。项目可能缺失或已损坏。"
 
-msgid "New Game Project"
-msgstr "新建游戏项目"
-
 msgid "Import & Edit"
 msgstr "导入并编辑"
 
@@ -13831,6 +13891,9 @@ msgstr "显示缩放"
 
 msgid "Network Mode"
 msgstr "网络模式"
+
+msgid "Directory Naming Convention"
+msgstr "目录命名规范"
 
 msgid ""
 "Settings changed! The project manager must be restarted for changes to take "
@@ -14777,36 +14840,45 @@ msgstr "导出设置："
 msgid "glTF 2.0 Scene..."
 msgstr "glTF 2.0 场景..."
 
-msgid "Path does not contain a Blender installation."
-msgstr "路径不包含 Blender。"
+msgid "Path does not point to a valid executable."
+msgstr "路径未指向有效的可执行文件。"
 
-msgid "Can't execute Blender binary."
+msgid "Couldn't run Blender executable."
 msgstr "无法运行 Blender 可执行文件。"
 
-msgid "Unexpected --version output from Blender binary at: %s."
+msgid "Unexpected --version output from Blender executable at: %s."
 msgstr "位于 %s 的 Blender 可执行文件的 --version 输出与预期不符。"
 
-msgid "Path supplied lacks a Blender binary."
-msgstr "路径中缺失 Blender 可执行文件。"
+msgid "Couldn't extract version information from Blender executable at: %s."
+msgstr "无法提取位于 %s 的 Blender 可执行文件的版本。"
 
-msgid "This Blender installation is too old for this importer (not 3.0+)."
-msgstr "安装的 Blender 版本低于导入器的要求（不是 3.0+）。"
+msgid ""
+"Found Blender version %d.x, which is too old for this importer (3.0+ is "
+"required)."
+msgstr "检测到 Blender 版本为 %d.x，低于导入器的要求（不是 3.0+）。"
 
-msgid "Path to Blender installation is valid (Autodetected)."
-msgstr "Blender 安装路径有效（自动检测）。"
+msgid "Path to Blender executable is valid (Autodetected)."
+msgstr "Blender 可执行文件路径有效（自动检测）。"
 
-msgid "Path to Blender installation is valid."
-msgstr "Blender 安装路径有效。"
+msgid "Path to Blender executable is valid."
+msgstr "Blender 可执行文件路径有效。"
 
 msgid "Configure Blender Importer"
 msgstr "配置 Blender 导入器"
 
 msgid ""
 "Blender 3.0+ is required to import '.blend' files.\n"
-"Please provide a valid path to a Blender installation:"
+"Please provide a valid path to a Blender executable."
 msgstr ""
-"要导入“.blend”文件，需要 Blender 3.0 以上版本。\n"
-"请提供一个有效的 Blender 安装路径："
+"导入“.blend”文件需要至少 Blender 3.0 版本。\n"
+"请提供有效的 Blender 可执行文件路径。"
+
+msgid ""
+"On macOS, this should be the `Contents/MacOS/blender` file within the Blender "
+"`.app` folder."
+msgstr ""
+"在 macOS 上，该路径应为 Blender `.app` 文件夹中的 `Contents/MacOS/blender` 文"
+"件。"
 
 msgid "Disable '.blend' Import"
 msgstr "禁用“.blend”导入"
@@ -15772,6 +15844,12 @@ msgid ""
 "template archive."
 msgstr "未找到请求的模板二进制文件“%s”。你的模板包中可能缺失该文件。"
 
+msgid "ARM64 simulator library, generating from device library."
+msgstr "ARM64 模拟器库，根据设备库生成。"
+
+msgid "Unable to generate ARM64 simulator library."
+msgstr "无法生成 ARM64 模拟器库。"
+
 msgid "Could not copy a file at path \"%s\" to \"%s\"."
 msgstr "无法将位于“%s”的文件复制到“%s”。"
 
@@ -16028,6 +16106,9 @@ msgid ""
 "Could not start codesign executable, make sure Xcode command line tools are "
 "installed."
 msgstr "无法启动 codesign 可执行文件，请确保已安装 Xcode 命令行工具。"
+
+msgid "Cannot sign directory %s."
+msgstr "无法签名目录 %s。"
 
 msgid "Cannot sign file %s."
 msgstr "无法签名文件 %s。"
@@ -16353,6 +16434,13 @@ msgid "Run exported project on remote Windows system"
 msgstr "在远程 Windows 系统上运行导出的项目"
 
 msgid ""
+"A SpriteFrames resource must be created or set in the \"Sprite Frames\" "
+"property in order for AnimatedSprite2D to display frames."
+msgstr ""
+"必须先在“Sprite Frames”属性中新建或设置 SpriteFrames 资源，才能让 "
+"AnimatedSprite2D 显示动画帧。"
+
+msgid ""
 "Only one visible CanvasModulate is allowed per canvas.\n"
 "When there are more than one, only one of them will be active. Which one is "
 "undefined."
@@ -16536,6 +16624,18 @@ msgstr "Bone2D 节点仅适用于 Skeleton2D 节点或者另一个作为父节�
 msgid ""
 "This bone lacks a proper REST pose. Go to the Skeleton2D node and set one."
 msgstr "这根骨骼没有合适的放松姿势。请到 Skeleton2D 节点中设置一个。"
+
+msgid ""
+"The TileMap node is deprecated as it is superseded by the use of multiple "
+"TileMapLayer nodes.\n"
+"To convert a TileMap to a set of TileMapLayer nodes, open the TileMap bottom "
+"panel with this node selected, click the toolbox icon in the top-right corner "
+"and choose \"Extract TileMap layers as individual TileMapLayer nodes\"."
+msgstr ""
+"TileMap 节点被已弃用，由多个 TileMapLayer 节点代替。\n"
+"将 TileMap 节点转换为多个 TileMapLayer 节点：选中该节点后打开 TileMap 底部面"
+"板，点击右上角的工具箱图标，然后选择“将 TileMap 图层提取为独立的 TileMapLayer "
+"节点”。"
 
 msgid ""
 "A Y-sorted layer has the same Z-index value as a not Y-sorted layer.\n"
@@ -16925,6 +17025,13 @@ msgstr ""
 
 msgid "This body will be ignored until you set a mesh."
 msgstr "在设置网格之前，将忽略该实体。"
+
+msgid ""
+"A SpriteFrames resource must be created or set in the \"Sprite Frames\" "
+"property in order for AnimatedSprite3D to display frames."
+msgstr ""
+"必须先在“Sprite Frames”属性中新建或设置 SpriteFrames 资源，才能让 "
+"AnimatedSprite3D 显示动画帧。"
 
 msgid ""
 "The GeometryInstance3D visibility range's End distance is set to a non-zero "
@@ -17323,6 +17430,14 @@ msgid ""
 "'vertex' or 'light'."
 msgstr "在“fragment”函数中赋值的 varying 不能在“vertex”和“light”中重新赋值。"
 
+msgid "'%s' cannot be used within the '%s' processor function."
+msgstr "“%s”无法在“%s”处理器函数中使用。"
+
+msgid ""
+"'%s' cannot be used here, because '%s' is called by the '%s' processor "
+"function (which is not allowed)."
+msgstr "此处无法使用“%s”，因为“%s”会被“%s”处理器函数调用（不允许这么做）。"
+
 msgid "Assignment to function."
 msgstr "对函数赋值。"
 
@@ -17339,20 +17454,22 @@ msgid ""
 "Sampler argument %d of function '%s' called more than once using both built-"
 "ins and uniform textures, this is not supported (use either one or the other)."
 msgstr ""
-"采样器参数 %d：函数“%s”有多次调用，同时使用了内置和 uniform 纹理，不支持这种用"
-"法（请在其中选择一种使用）。"
+"采样器参数 %d 在函数“%s”中存在多次调用，同时使用了内置和 uniform 纹理，不支持"
+"这种用法（请在其中选择一种使用）。"
 
 msgid ""
 "Sampler argument %d of function '%s' called more than once using textures "
-"that differ in either filter or repeat setting."
-msgstr "采样器参数 %d：函数“%s”有多次调用，所使用纹理的过滤或重复设置不同。"
+"that differ in either filter, repeat, or texture hint setting."
+msgstr ""
+"采样器参数 %d 在函数“%s”中存在多次调用，调用时所使用纹理过滤、纹理重复或纹理提"
+"示设置不同。"
 
 msgid ""
 "Sampler argument %d of function '%s' called more than once using different "
 "built-ins. Only calling with the same built-in is supported."
 msgstr ""
-"采样器参数 %d：函数“%s”有多次调用，使用的内置不同。仅支持使用相同的内置进行调"
-"用。"
+"采样器参数 %d 在函数“%s”中存在多次调用，调用时使用的内置不同。仅支持使用相同的"
+"内置进行调用。"
 
 msgid "Array size is already defined."
 msgstr "数组大小已定义。"
@@ -17390,15 +17507,14 @@ msgstr "类型名称后预期为“(”。"
 msgid "No matching constructor found for: '%s'."
 msgstr "没有找到匹配的构造函数：“%s”。"
 
+msgid "Built-in function '%s' is not supported for the '%s' shader type."
+msgstr "内置函数“%s”不支持着色器类型“%s”。"
+
 msgid "Expected a function name."
 msgstr "预期为函数名称。"
 
 msgid "No matching function found for: '%s'."
 msgstr "没有找到与之匹配的函数：“%s”。"
-
-msgid ""
-"Varying '%s' must be assigned in the 'vertex' or 'fragment' function first."
-msgstr "Varying“%s”必须先在“vertex”或“fragment”函数中赋值。"
 
 msgid "Varying '%s' cannot be passed for the '%s' parameter in that context."
 msgstr "Varying“%s”在该上下文中无法作为“%s”参数传递。"

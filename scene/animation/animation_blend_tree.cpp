@@ -138,15 +138,11 @@ AnimationNode::NodeTimeInfo AnimationNodeAnimation::_process(const AnimationMixe
 	bool p_seek = p_playback_info.seeked;
 	bool p_is_external_seeking = p_playback_info.is_external_seeking;
 
-	bool is_just_looped = false;
-
 	// 1. Progress for AnimationNode.
+	bool will_end = Animation::is_greater_or_equal_approx(cur_time + cur_delta, cur_len);
 	if (cur_loop_mode != Animation::LOOP_NONE) {
 		if (cur_loop_mode == Animation::LOOP_LINEAR) {
 			if (!Math::is_zero_approx(cur_len)) {
-				if (Animation::is_less_or_equal_approx(prev_time, cur_len) && Animation::is_greater_approx(cur_time, cur_len)) {
-					is_just_looped = true; // Don't break with negative timescale since remain will not be 0.
-				}
 				cur_time = Math::fposmod(cur_time, cur_len);
 			}
 			backward = false;
@@ -156,7 +152,6 @@ AnimationNode::NodeTimeInfo AnimationNodeAnimation::_process(const AnimationMixe
 					backward = !backward;
 				} else if (Animation::is_less_or_equal_approx(prev_time, cur_len) && Animation::is_greater_approx(cur_time, cur_len)) {
 					backward = !backward;
-					is_just_looped = true; // Don't break with negative timescale since remain will not be 0.
 				}
 				cur_time = Math::pingpong(cur_time, cur_len);
 			}
@@ -190,7 +185,7 @@ AnimationNode::NodeTimeInfo AnimationNodeAnimation::_process(const AnimationMixe
 	nti.position = cur_time;
 	nti.delta = cur_delta;
 	nti.loop_mode = cur_loop_mode;
-	nti.is_just_looped = is_just_looped;
+	nti.will_end = will_end;
 
 	// 3. Progress for Animation.
 	double prev_playback_time = prev_time + start_offset;
@@ -242,6 +237,7 @@ AnimationNode::NodeTimeInfo AnimationNodeAnimation::_process(const AnimationMixe
 			}
 			// Finished.
 			if (Animation::is_less_approx(prev_playback_time, anim_size) && Animation::is_greater_or_equal_approx(cur_playback_time, anim_size)) {
+				cur_playback_time = anim_size;
 				process_state->tree->call_deferred(SNAME("emit_signal"), SceneStringName(animation_finished), animation);
 			}
 		}
@@ -758,9 +754,6 @@ AnimationNode::NodeTimeInfo AnimationNodeAdd2::_process(const AnimationMixer::Pl
 	return nti;
 }
 
-void AnimationNodeAdd2::_bind_methods() {
-}
-
 AnimationNodeAdd2::AnimationNodeAdd2() {
 	add_input("in");
 	add_input("add");
@@ -802,9 +795,6 @@ AnimationNode::NodeTimeInfo AnimationNodeAdd3::_process(const AnimationMixer::Pl
 	blend_input(2, pi, FILTER_PASS, sync, p_test_only);
 
 	return nti;
-}
-
-void AnimationNodeAdd3::_bind_methods() {
 }
 
 AnimationNodeAdd3::AnimationNodeAdd3() {
@@ -849,9 +839,6 @@ bool AnimationNodeBlend2::has_filter() const {
 	return true;
 }
 
-void AnimationNodeBlend2::_bind_methods() {
-}
-
 AnimationNodeBlend2::AnimationNodeBlend2() {
 	add_input("in");
 	add_input("blend");
@@ -889,9 +876,6 @@ AnimationNode::NodeTimeInfo AnimationNodeBlend3::_process(const AnimationMixer::
 	NodeTimeInfo nti2 = blend_input(2, pi, FILTER_IGNORE, sync, p_test_only);
 
 	return amount > 0.5 ? nti2 : (amount < -0.5 ? nti0 : nti1); // Hacky but good enough.
-}
-
-void AnimationNodeBlend3::_bind_methods() {
 }
 
 AnimationNodeBlend3::AnimationNodeBlend3() {
@@ -936,9 +920,6 @@ AnimationNode::NodeTimeInfo AnimationNodeSub2::_process(const AnimationMixer::Pl
 	return blend_input(0, pi, FILTER_IGNORE, sync, p_test_only);
 }
 
-void AnimationNodeSub2::_bind_methods() {
-}
-
 AnimationNodeSub2::AnimationNodeSub2() {
 	add_input("in");
 	add_input("sub");
@@ -974,9 +955,6 @@ AnimationNode::NodeTimeInfo AnimationNodeTimeScale::_process(const AnimationMixe
 	}
 
 	return blend_input(0, pi, FILTER_IGNORE, true, p_test_only);
-}
-
-void AnimationNodeTimeScale::_bind_methods() {
 }
 
 AnimationNodeTimeScale::AnimationNodeTimeScale() {
@@ -1016,9 +994,6 @@ AnimationNode::NodeTimeInfo AnimationNodeTimeSeek::_process(const AnimationMixer
 	}
 
 	return blend_input(0, pi, FILTER_IGNORE, true, p_test_only);
-}
-
-void AnimationNodeTimeSeek::_bind_methods() {
 }
 
 AnimationNodeTimeSeek::AnimationNodeTimeSeek() {

@@ -41,13 +41,14 @@
 # Trần Đức Minh Nhật <mncc8327@gmail.com>, 2024.
 # doan thinh <thinhdoan2k5@gmail.com>, 2024.
 # Trọng Hiếu <contact.tronghieu83@gmail.com>, 2024.
+# duongmai <flashlight135790@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: Godot Engine editor interface\n"
 "Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-26 11:46+0000\n"
-"Last-Translator: Trọng Hiếu <contact.tronghieu83@gmail.com>\n"
+"PO-Revision-Date: 2024-07-29 11:09+0000\n"
+"Last-Translator: duongmai <flashlight135790@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/godot-engine/"
 "godot/vi/>\n"
 "Language: vi\n"
@@ -55,7 +56,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.6-rc\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 msgid "Main Thread"
 msgstr "Chủ đề chính"
@@ -177,8 +178,18 @@ msgstr "D-pad phải"
 msgid "Pressure:"
 msgstr "Áp lực:"
 
+msgid "touched"
+msgstr "đã chạm"
+
 msgid "released"
 msgstr "được thả ra"
+
+msgid "Screen %s at (%s) with %s touch points"
+msgstr "Màn hình %s tại (%s) với %s điểm chạm"
+
+msgid ""
+"Screen dragged with %s touch points at position (%s) with velocity of (%s)"
+msgstr "Màn hình được kéo với %s điểm kéo tại vị trí (%s) với tốc độ (%s)"
 
 msgid "Magnify Gesture at (%s) with factor %s"
 msgstr "Cử chỉ Phóng to tại (%s) với hệ số (%s)"
@@ -631,6 +642,34 @@ msgstr "Tỉ lệ phóng đại:"
 msgctxt "Transition Type"
 msgid "Sine"
 msgstr "Sin"
+
+msgctxt "Transition Type"
+msgid "Elastic"
+msgstr "Đàn hồi"
+
+msgctxt "Transition Type"
+msgid "Cubic"
+msgstr "Bậc 3"
+
+msgctxt "Transition Type"
+msgid "Circ"
+msgstr "Đường tròn"
+
+msgctxt "Transition Type"
+msgid "Bounce"
+msgstr "Nảy"
+
+msgctxt "Transition Type"
+msgid "Spring"
+msgstr "Lò xo"
+
+msgctxt "Ease Type"
+msgid "In"
+msgstr "Vào"
+
+msgctxt "Ease Type"
+msgid "Out"
+msgstr "Ra"
 
 msgid "Select Tracks to Copy"
 msgstr "Chọn các Track để sao chép"
@@ -2254,20 +2293,41 @@ msgstr "Thay đổi sẽ được áp dụng sau khi Trình biên tập khởi �
 msgid "Shortcuts"
 msgstr "Lối tắt"
 
+msgid "Unicode"
+msgstr "Unicode"
+
 msgid "All Devices"
 msgstr "Tất cả thiết bị"
 
 msgid "Device"
 msgstr "Thiết bị"
 
+msgid "Listening for Input"
+msgstr "Đang đợi nhập"
+
+msgid "Filter by Event"
+msgstr "Lọc theo sự kiện"
+
+msgid "Can't get filesystem access."
+msgstr "Không nhận được quyền truy cập hệ thống tệp."
+
 msgid "Failed to create \"%s\" subfolder."
 msgstr "Thất bại khi tạo thư mục con \"%s\"."
 
+msgid "Unknown Error"
+msgstr "Lỗi không rõ nguyên nhân"
+
+msgid "Export failed with error code %d."
+msgstr "Xuất thất bại với mã lỗi %d."
+
 msgid "Storing File: %s"
-msgstr "Lưu trữ tệp tin: %s"
+msgstr "Lưu trữ tệp: %s"
 
 msgid "Storing File:"
-msgstr "Lưu trữ tệp tin:"
+msgstr "Lưu trữ tệp:"
+
+msgid "ZIP Creation"
+msgstr "Tạo tệp ZIP"
 
 msgid "Could not open file to read from path \"%s\"."
 msgstr "Không thể mở tệp tin để đọc từ đường dẫn \"%s\"."
@@ -2284,6 +2344,12 @@ msgstr "Không thể mở tệp tin để ghi ở đường dẫn \"%s\"."
 msgid "Can't open file for reading-writing at path \"%s\"."
 msgstr "Không thể mở tệp tin để ghi và đọc ở đường dẫn \"%s\"."
 
+msgid "Can't create encrypted file."
+msgstr "Không thể tạo tệp mã hóa."
+
+msgid "Can't open encrypted file to write."
+msgstr "Không thể mở tệp mã hóa để ghi."
+
 msgid "Can't open file to read from path \"%s\"."
 msgstr "Không thể mở tệp tin để đọc từ đường dẫn \"%s\"."
 
@@ -2299,6 +2365,9 @@ msgstr "Không tìm thấy tệp bản mẫu: \"%s\"."
 msgid "On 32-bit exports the embedded PCK cannot be bigger than 4 GiB."
 msgstr "Ở các bản xuất 32-bit thì PCK được nhúng vào không thể lớn hơn 4 GiB."
 
+msgid "Plugin \"%s\" is not supported on \"%s\""
+msgstr "Trình mở rộng \"%s\" không được hỗ trợ trên \"%s\""
+
 msgid "Open the folder containing these templates."
 msgstr "Mở thư mục chứa các bản mẫu này."
 
@@ -2307,6 +2376,9 @@ msgstr "Gỡ cài đặt các bản mẫu này."
 
 msgid "There are no mirrors available."
 msgstr "Không có máy chủ có sẵn."
+
+msgid "Starting the download..."
+msgstr "Bắt đầu quá trình tải..."
 
 msgid "Error requesting URL:"
 msgstr "Lỗi khi yêu cầu đường dẫn:"
@@ -2330,12 +2402,18 @@ msgstr ""
 msgid "Error getting the list of mirrors."
 msgstr "Có lỗi khi lấy các trang mirror."
 
+msgid "Best available mirror"
+msgstr "Nguồn tải xuống tốt nhất"
+
 msgid ""
 "No download links found for this version. Direct download is only available "
 "for official releases."
 msgstr ""
 "Không tìm thấy liên kết để tải phiên bản này. Chỉ có thể tải trực tiếp các "
 "bản chính thức."
+
+msgid "Disconnected"
+msgstr "Đã bị ngắt kết nối"
 
 msgid "Connecting..."
 msgstr "Đang kết nối..."
@@ -2498,6 +2576,29 @@ msgstr "Tùy chỉnh (dấu-phẩy-phân-cách):"
 msgid "Feature List:"
 msgstr "Danh sách tính năng:"
 
+msgid "Encryption"
+msgstr "Mã hóa"
+
+msgid "Encrypt Exported PCK"
+msgstr "Mã hóa PCK xuất ra"
+
+msgid ""
+"Filters to include files/folders\n"
+"(comma-separated, e.g: *.tscn, *.tres, scenes/*)"
+msgstr ""
+"Bộ lọc loại trừ các tệp tin/thư mục khỏi từ dự án\n"
+"(tách bằng dấu phẩy, ví dụ: *.json, *.txt, docs/*)"
+
+msgid ""
+"Filters to exclude files/folders\n"
+"(comma-separated, e.g: *.ctex, *.import, music/*)"
+msgstr ""
+"Bộ lọc loại trừ các tệp tin/thư mục khỏi từ dự án\n"
+"(tách bằng dấu phẩy, ví dụ: *.json, *.txt, docs/*)"
+
+msgid "Binary tokens (faster loading)"
+msgstr "Mã nhị phân (truy cập nhanh hơn)"
+
 msgid "Export All"
 msgstr "Xuất tất cả"
 
@@ -2507,8 +2608,20 @@ msgstr "Tệp ZIP"
 msgid "Export templates for this platform are missing:"
 msgstr "Các mẫu xuất bản cho nền tảng này bị thiếu:"
 
+msgid "Project Export"
+msgstr "Xuất dự án"
+
 msgid "Manage Export Templates"
 msgstr "Quản lí bản mẫu xuất"
+
+msgid "FBX2glTF executable is valid."
+msgstr "Tệp thực thi FBX2glTF không hợp lệ."
+
+msgid "Configure FBX Importer"
+msgstr "Tùy chỉnh trình nhập FBX"
+
+msgid "Click this link to download FBX2glTF"
+msgstr "Nhấn đường link để tải về FBX2glTF"
 
 msgid "Browse"
 msgstr "Duyệt"
@@ -2611,6 +2724,33 @@ msgstr "Nhân đôi..."
 msgid "Rename..."
 msgstr "Đổi tên..."
 
+msgid "Red"
+msgstr "Đỏ"
+
+msgid "Orange"
+msgstr "Cam"
+
+msgid "Yellow"
+msgstr "Vàng"
+
+msgid "Green"
+msgstr "Xanh lá cây"
+
+msgid "Teal"
+msgstr "Xanh lơ"
+
+msgid "Blue"
+msgstr "Xanh dương"
+
+msgid "Purple"
+msgstr "Tím"
+
+msgid "Pink"
+msgstr "Hồng"
+
+msgid "Gray"
+msgstr "Xám"
+
 msgid "Re-Scan Filesystem"
 msgstr "Quét lại hệ thống tập tin"
 
@@ -2626,6 +2766,9 @@ msgstr ""
 
 msgid "Overwrite"
 msgstr "Ghi đè"
+
+msgid "Keep Both"
+msgstr "Giữ cả hai"
 
 msgid "Create Script"
 msgstr "Tạo tập lệnh"
@@ -2657,6 +2800,9 @@ msgstr "Tìm..."
 
 msgid "Replace..."
 msgstr "Thay thế ..."
+
+msgid "Replace all (no undo)"
+msgstr "Thay thế tất cả (không quay lại)"
 
 msgid "Searching..."
 msgstr "Đang tìm kiếm ..."
@@ -2806,11 +2952,29 @@ msgstr ""
 "Giữ \"%s\" để làm tròn về số nguyên.\n"
 "Giữ Shift để chỉnh sửa tỉ mỉ hơn."
 
+msgid "No notifications."
+msgstr "Không có thông báo."
+
+msgid "Show notifications."
+msgstr "Hiện thông báo."
+
+msgid "Silence the notifications."
+msgstr "Tắt âm thông báo."
+
 msgid "Unlock Node"
 msgstr "Mở khoá nút"
 
 msgid "Node configuration warning:"
 msgstr "Cảnh báo cấu hình nút:"
+
+msgid ""
+"This node can be accessed from within anywhere in the scene by preceding it "
+"with the '%s' prefix in a node path.\n"
+"Click to disable this."
+msgstr ""
+"Nút này có thể được truy cập ở bất cứ đâu trong Cảnh bằng cách đặt trước tên "
+"của nút ký hiệu '%s' ở đường dẫn nút.\n"
+"Nhấn để hủy."
 
 msgid "Click to show signals dock."
 msgstr "Nhấp để hiện khung tín hiệu."
@@ -2874,6 +3038,9 @@ msgstr "Đang lưu ..."
 msgid "Import ID: %s"
 msgstr "Nhập ID: %s"
 
+msgid "Secondary Light"
+msgstr "Nguồn sáng thứ cấp"
+
 msgid "Status"
 msgstr "Trạng thái"
 
@@ -2882,6 +3049,18 @@ msgstr "Trình nhập âm thanh: %s"
 
 msgid "Offset:"
 msgstr "Độ dời:"
+
+msgid "Loop:"
+msgstr "Vòng lặp"
+
+msgid "BPM:"
+msgstr "BPM:"
+
+msgid "Bar Beats:"
+msgstr "Số phách mỗi nhịp:"
+
+msgid "New Configuration"
+msgstr "Cấu hình mới"
 
 msgid "2D"
 msgstr "2D"
@@ -5382,6 +5561,26 @@ msgstr ""
 msgid "The path specified doesn't exist."
 msgstr "Đường dẫn đã cho không tồn tại."
 
+msgid "New Game Project"
+msgstr "Dự án Trò chơi Mới"
+
+msgid "Fastest rendering of simple scenes."
+msgstr "Render nhanh nhất cho Cảnh đơn giản."
+
+msgid "Warning: This folder is not empty"
+msgstr "Cảnh báo: Thư mục này không phải là thư mục trống"
+
+msgid ""
+"You are about to create a Godot project in a non-empty folder.\n"
+"The entire contents of this folder will be imported as project resources!\n"
+"\n"
+"Are you sure you wish to continue?"
+msgstr ""
+"Bạn đang tạo một dự án trong một thư mục không trống.\n"
+"Toàn bộ nội dung bên trong sẽ được lấy làm tài nguyên cho dự án!\n"
+"\n"
+"Bạn có muốn tiếp tục không?"
+
 msgid "Couldn't create project.godot in project path."
 msgstr "Không thể tạo 'project.godot' trong đường dẫn dự án."
 
@@ -5394,9 +5593,6 @@ msgstr "Không thể lấy các tệp sau khỏi gói:"
 msgid ""
 "Couldn't load project at '%s' (error %d). It may be missing or corrupted."
 msgstr "Không thể tải dự án ở '%s' (lỗi %d). Nó có thể đã bị mất hoặc bị hỏng."
-
-msgid "New Game Project"
-msgstr "Dự án Trò chơi Mới"
 
 msgid "Import & Edit"
 msgstr "Nhập & Chỉnh sửa"
@@ -6148,6 +6344,9 @@ msgstr "Chế độ lọc bị lặp lại: '%s'."
 msgid "Duplicated repeat mode: '%s'."
 msgstr "Chế độ lặp bị lặp lại: '%s'."
 
+msgid "Void type not allowed as argument."
+msgstr "Biến kiểu 'void' không dược sử dụng làm đối số."
+
 msgid "Expected a '%s'."
 msgstr "Mong đợi một '%s'."
 
@@ -6189,6 +6388,18 @@ msgstr "Đối số macro không hợp lệ."
 
 msgid "Invalid macro argument count."
 msgstr "Số lượng đối số macro không hợp lệ."
+
+msgid "The const '%s' is declared but never used."
+msgstr "Biến const '%s' được khai báo nhưng không sử dụng."
+
+msgid "The function '%s' is declared but never used."
+msgstr "Hàm '%s' được khai báo nhưng không sử dụng."
+
+msgid "The uniform '%s' is declared but never used."
+msgstr "Biến uniform '%s' được khai báo nhưng không sử dụng."
+
+msgid "The varying '%s' is declared but never used."
+msgstr "Biến varying '%s' được khai báo nhưng không sử dụng."
 
 msgid "The local variable '%s' is declared but never used."
 msgstr "Giá trị %s được khai báo nhưng không sử dung."
